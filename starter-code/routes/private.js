@@ -1,9 +1,9 @@
 const express = require('express');
 const router  = express.Router();
+const ensureLogin = require('connect-ensure-login')
 
-/* GET home page */
-router.get('/private', (req, res, next) => {
-  res.render('auth/private');
+router.get('/private', ensureLogin.ensureLoggedIn('/login'), (req, res, next) => {
+  res.render('auth/private', { user: req.user });
 });
 
 router.get("/logout", (req, res) => {
